@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a4de3fadcdd14b578411ed0c6f0301d6" Name="Diagram1">
+        <AssociationConnector Association="TiendaDBModel.FK_Order_Order" />
+        <EntityTypeShape EntityType="TiendaDBModel.Cities" Width="1.5" PointX="0.75" PointY="1.375" />
+        <EntityTypeShape EntityType="TiendaDBModel.Order" Width="1.5" PointX="5.25" PointY="1" />
+        <EntityTypeShape EntityType="TiendaDBModel.OrderDetail" Width="1.5" PointX="7.5" PointY="1" />
+        <EntityTypeShape EntityType="TiendaDBModel.Prodcts" Width="1.5" PointX="5.25" PointY="5.375" />
+        <EntityTypeShape EntityType="TiendaDBModel.UserAddress" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="TiendaDBModel.Users" Width="1.5" PointX="3" PointY="5.25" />
+        <AssociationConnector Association="TiendaDBModel.FK_UserAddress_Cities" />
+        <AssociationConnector Association="TiendaDBModel.FK_Order_UserAddress" />
+        <AssociationConnector Association="TiendaDBModel.FK_Order_Users" />
+        <AssociationConnector Association="TiendaDBModel.FK_OrderDetail_Order" />
+        <AssociationConnector Association="TiendaDBModel.FK_OrderDetail_Prodcts" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

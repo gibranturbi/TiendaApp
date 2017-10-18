@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TiendaDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="TiendaDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Cities" EntityType="TiendaDBModel.Cities" />
+    <EntitySet Name="Order" EntityType="TiendaDBModel.Order" />
+    <EntitySet Name="OrderDetail" EntityType="TiendaDBModel.OrderDetail" />
+    <EntitySet Name="Prodcts" EntityType="TiendaDBModel.Prodcts" />
+    <EntitySet Name="UserAddress" EntityType="TiendaDBModel.UserAddress" />
+    <EntitySet Name="Users" EntityType="TiendaDBModel.Users" />
+    <AssociationSet Name="FK_UserAddress_Cities" Association="TiendaDBModel.FK_UserAddress_Cities">
+      <End Role="Cities" EntitySet="Cities" />
+      <End Role="UserAddress" EntitySet="UserAddress" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_UserAddress" Association="TiendaDBModel.FK_Order_UserAddress">
+      <End Role="UserAddress" EntitySet="UserAddress" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Users" Association="TiendaDBModel.FK_Order_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderDetail_Order" Association="TiendaDBModel.FK_OrderDetail_Order">
+      <End Role="Order" EntitySet="Order" />
+      <End Role="OrderDetail" EntitySet="OrderDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderDetail_Prodcts" Association="TiendaDBModel.FK_OrderDetail_Prodcts">
+      <End Role="Prodcts" EntitySet="Prodcts" />
+      <End Role="OrderDetail" EntitySet="OrderDetail" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Cities">
+    <Key>
+      <PropertyRef Name="CityId" />
+    </Key>
+    <Property Name="CityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CityName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="UserAddress" Relationship="TiendaDBModel.FK_UserAddress_Cities" FromRole="Cities" ToRole="UserAddress" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="OrderId" />
+    </Key>
+    <Property Name="OrderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AddressId" Type="Int32" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="OrderDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="UserAddress" Relationship="TiendaDBModel.FK_Order_UserAddress" FromRole="Order" ToRole="UserAddress" />
+    <NavigationProperty Name="Users" Relationship="TiendaDBModel.FK_Order_Users" FromRole="Order" ToRole="Users" />
+    <NavigationProperty Name="OrderDetail" Relationship="TiendaDBModel.FK_OrderDetail_Order" FromRole="Order" ToRole="OrderDetail" />
+  </EntityType>
+  <EntityType Name="OrderDetail">
+    <Key>
+      <PropertyRef Name="OrderId" />
+    </Key>
+    <Property Name="OrderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductId" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="ProductPrice" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="TotalPrice" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <NavigationProperty Name="Order" Relationship="TiendaDBModel.FK_OrderDetail_Order" FromRole="OrderDetail" ToRole="Order" />
+    <NavigationProperty Name="Prodcts" Relationship="TiendaDBModel.FK_OrderDetail_Prodcts" FromRole="OrderDetail" ToRole="Prodcts" />
+  </EntityType>
+  <EntityType Name="Prodcts">
+    <Key>
+      <PropertyRef Name="ProductId" />
+    </Key>
+    <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ProductPrice" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <NavigationProperty Name="OrderDetail" Relationship="TiendaDBModel.FK_OrderDetail_Prodcts" FromRole="Prodcts" ToRole="OrderDetail" />
+  </EntityType>
+  <EntityType Name="UserAddress">
+    <Key>
+      <PropertyRef Name="AddressId" />
+    </Key>
+    <Property Name="AddressId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Address" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Province" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CityId" Type="Int32" Nullable="false" />
+    <Property Name="ZipCode" Type="Int32" Nullable="false" />
+    <Property Name="PhoneNumber" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Cities" Relationship="TiendaDBModel.FK_UserAddress_Cities" FromRole="UserAddress" ToRole="Cities" />
+    <NavigationProperty Name="Order" Relationship="TiendaDBModel.FK_Order_UserAddress" FromRole="UserAddress" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="UserLastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="UserType" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Order" Relationship="TiendaDBModel.FK_Order_Users" FromRole="Users" ToRole="Order" />
+  </EntityType>
+  <Association Name="FK_UserAddress_Cities">
+    <End Type="TiendaDBModel.Cities" Role="Cities" Multiplicity="1" />
+    <End Type="TiendaDBModel.UserAddress" Role="UserAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cities">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="UserAddress">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_UserAddress">
+    <End Type="TiendaDBModel.UserAddress" Role="UserAddress" Multiplicity="1" />
+    <End Type="TiendaDBModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserAddress">
+        <PropertyRef Name="AddressId" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="AddressId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Users">
+    <End Type="TiendaDBModel.Users" Role="Users" Multiplicity="1" />
+    <End Type="TiendaDBModel.Order" Role="Order" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderDetail_Order">
+    <End Type="TiendaDBModel.Order" Role="Order" Multiplicity="1" />
+    <End Type="TiendaDBModel.OrderDetail" Role="OrderDetail" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="OrderId" />
+      </Principal>
+      <Dependent Role="OrderDetail">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderDetail_Prodcts">
+    <End Type="TiendaDBModel.Prodcts" Role="Prodcts" Multiplicity="1" />
+    <End Type="TiendaDBModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Prodcts">
+        <PropertyRef Name="ProductId" />
+      </Principal>
+      <Dependent Role="OrderDetail">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
